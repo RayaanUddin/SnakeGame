@@ -18,16 +18,45 @@ public class Game extends JPanel implements KeyListener {
     private final Position food;
     private final Snake snake;
     private Timer gameTimer = null;
+
+    private JLabel scoreLabel;
+
+    // Set new position for food
+    private void generateFood() {
+        food.x = (int) (Math.random() * getWidth() / 10);
+        food.y = (int) (Math.random() * getHeight() / 10);
+    }
+
+    // Eat food
+    private void eatFood() {
+        snake.increaseLength(1);
+        scoreLabel.setText("Score: " + snake.getLength());
+        generateFood();
+    }
+
     public Game(int width, int height, Snake snake) {
         super();
         addKeyListener(this);
+
+        // Set the snake and initiate the snake body
         this.snake = snake;
         snakeBody = new ArrayList<>();
+        snakeHeadPosition = new Position(0, 0);
+
+        // Set the panel of game (10 pixels per block)
         setPreferredSize(new Dimension(width * 10, height * 10));
         setBackground(Color.BLACK);
         setFocusable(true);
-        snakeHeadPosition = new Position(0, 0);
-        food = new Position((int) (Math.random() * width), (int) (Math.random() * height));
+
+        // Create score label
+        scoreLabel = new JLabel("Score: 0");
+        scoreLabel.setForeground(Color.WHITE);
+        add(scoreLabel);
+
+        // Initialize the food
+        food = new Position(0, 0);
+        generateFood();
+
         gameTimer = new Timer(100, e -> {
             //gameTimer.setDelay((int) (1000 * snake.getSpeedMultiplier()));
             if (snake.getDirection() == 0) {
@@ -55,22 +84,20 @@ public class Game extends JPanel implements KeyListener {
                     System.out.println("Game Over! Your score: " + snake.getLength());
                     gameTimer.stop();
                     JOptionPane.showMessageDialog(this, "Game Over! Your score: " + snake.getLength());
-                    System.exit(0);
                 }
             }
 
             snakeBody.add(new Position(snakeHeadPosition.x, snakeHeadPosition.y));
-            if (snakeBody.size() > snake.getLength()) {
+            if (snakeBody.size()-1 > snake.getLength()) {
                 snakeBody.remove(0);
             }
 
             if (snakeHeadPosition.x == food.x && snakeHeadPosition.y == food.y) {
-                snake.increaseLength(1);
-                food.x = (int) (Math.random() * width);
-                food.y = (int) (Math.random() * height);
+                eatFood();
             }
             repaint();
         });
+
         gameTimer.start();
     }
 
