@@ -84,6 +84,7 @@ public class Game extends JPanel implements KeyListener {
                     System.out.println("Game Over! Your score: " + snake.getLength());
                     gameTimer.stop();
                     JOptionPane.showMessageDialog(this, "Game Over! Your score: " + snake.getLength());
+                    System.exit(0);
                 }
             }
 
