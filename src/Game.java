@@ -19,7 +19,7 @@ public class Game extends JPanel implements KeyListener {
     private final Snake snake;
     private Timer gameTimer = null;
 
-    private JLabel scoreLabel;
+    final private JLabel scoreLabel;
 
     // Set new position for food
     private void generateFood() {
