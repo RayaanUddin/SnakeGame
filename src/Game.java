@@ -139,15 +139,15 @@ public class Game extends JPanel implements KeyListener {
     public void keyPressed(KeyEvent e) {
         int key = e.getKeyCode();
         if (snake.getDirection() == 0 || snake.getDirection() == 2) {
-            if (key == KeyEvent.VK_RIGHT) {
+            if (key == KeyEvent.VK_RIGHT || key == KeyEvent.VK_D) {
                 snake.setDirection(1);
-            } else if (key == KeyEvent.VK_LEFT) {
+            } else if (key == KeyEvent.VK_LEFT || key == KeyEvent.VK_A) {
                 snake.setDirection(3);
             }
         } else if (snake.getDirection() == 1 || snake.getDirection() == 3) {
-            if (key == KeyEvent.VK_UP) {
+            if (key == KeyEvent.VK_UP || key == KeyEvent.VK_W) {
                 snake.setDirection(0);
-            } else if (key == KeyEvent.VK_DOWN) {
+            } else if (key == KeyEvent.VK_DOWN || key == KeyEvent.VK_S) {
                 snake.setDirection(2);
             }
         }
